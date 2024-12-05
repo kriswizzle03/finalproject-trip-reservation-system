@@ -1,6 +1,32 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
-    <h1>{% block title %} Reservations Page {% endblock %}</h1>
-    
+    <div class="centered-container">
+        <div class="content-box">
+            <h1>{% block title %} Reservations {% endblock %}</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Seat</th>
+                        <th>Reserved By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for seat in seating_chart %}
+                    <tr>
+                        <td>{{ seat['seat_number'] }}</td>
+                        <td>{{ seat['reserved_by'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Display total sales only if it's available -->
+            {% if total_sales is not none %}
+                <h2 style="margin-top: 20px;">Total Sales: ${{ total_sales }}</h2>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
