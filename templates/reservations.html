@@ -1,6 +1,106 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seat Reservations - FlaskApp</title>
+    <style>
+        .post {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3;
+        }
 
-{% block content %}
-    <h1>{% block title %} Reservations Page {% endblock %}</h1>
-    
-{% endblock %}
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+
+        .alert {
+            padding: 20px;
+            margin: 5px;
+            color: #970020;
+            background-color: #ffd5de;
+        }
+
+        .seat-chart {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            border: 1px solid #333;
+            background-color: #e3e3e3;
+        }
+
+        .seat.occupied {
+            background-color: #d64161;
+            color: #fff;
+        }
+
+        .total-sales {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .login-form {
+            margin: 20px 0;
+        }
+
+        .login-form input {
+            margin: 5px 0;
+            padding: 8px;
+            font-size: 1em;
+        }
+
+        .login-form button {
+            padding: 8px 16px;
+            font-size: 1em;
+            background-color: #d64161;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+        <a href="{{ url_for('reservations') }}">Reservations</a>
+    </nav>
+    <hr>
+    <div class="content">
+        <h1>Seat Reservations</h1>
+        <div class="seat-chart">
+            {% for row in range(rows) %}
+                {% for seat in range(seats_per_row) %}
+                    <div class="seat">O</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="total-sales">
+            Total Sales: $<span id="sales-value">0</span>
+        </div>
+        <div class="login-form">
+            <h2>Login</h2>
+            <form method="POST" action="{{ url_for('login') }}">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
