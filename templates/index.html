@@ -1,6 +1,33 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Homepage
+{% endblock %}
+
 {% block content %}
-    <h1>{% block title %} Homepage {% endblock %}</h1>
-    
+    <h1>IT-4320 Trip Reservation System</h1>
+    <div class="message-box">
+        <p>Welcome to our trip reservation system.</p>
+    </div>
+
+    <!-- Display error messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="error">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Dropdown form -->
+    <form method="POST" action="/">
+        <label for="option">Choose an action:</label>
+        <select name="option" id="option">
+            <option value="" disabled selected>-- Select an option --</option>
+            <option value="reserve_seat">Reserve a Seat</option>
+            <option value="admin_login">Admin Login</option>
+        </select>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
 {% endblock %}
