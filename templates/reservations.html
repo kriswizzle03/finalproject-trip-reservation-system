@@ -1,36 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Reservations
+{% endblock %}
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Seat Reservations - FlaskApp</title>
     <style>
-        .post {
-            padding: 10px;
-            margin: 5px;
-            background-color: #f3f3f3;
+        
+        .row {
+            display: contents;  
         }
-
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-
-        .alert {
-            padding: 20px;
-            margin: 5px;
-            color: #970020;
-            background-color: #ffd5de;
-        }
-
-        .seat-chart {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 5px;
-            margin: 20px 0;
-        }
-
         .seat {
             width: 30px;
             height: 30px;
@@ -41,66 +25,81 @@
             border: 1px solid #333;
             background-color: #e3e3e3;
         }
-
-        .seat.occupied {
-            background-color: #d64161;
-            color: #fff;
+        .success {
+            padding: 20px;
+            margin: 5px;
+            color: #008516;
+            background-color: #baffdb;
+        }
+        .note {
+            font-size: 12px;
         }
 
-        .total-sales {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-
-        .login-form {
-            margin: 20px 0;
-        }
-
-        .login-form input {
-            margin: 5px 0;
-            padding: 8px;
-            font-size: 1em;
-        }
-
-        .login-form button {
-            padding: 8px 16px;
-            font-size: 1em;
-            background-color: #d64161;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('admin') }}">Admin</a>
-        <a href="{{ url_for('reservations') }}">Reservations</a>
-    </nav>
-    <hr>
     <div class="content">
-        <h1>Seat Reservations</h1>
+        <!--Message if seat is successfully booked-->
+        {% if success_message %}
+           <div class="success"> 
+                {{ success_message }}
+            </div>
+        {% endif %}
+        <h1>Seating Chart</h1>
+        <span class="taken"><b>X </b></span><span>= Reserved Seat, 
+            <b>O</b> = Available Seat</span>
+        <p class="note">**Note: Seat numbers start from index 0**</p>
+        
         <div class="seat-chart">
-            {% for row in range(rows) %}
-                {% for seat in range(seats_per_row) %}
-                    <div class="seat">O</div>
+            {% for row, columns in seating_chart.items() %}
+            <div class="row">
+                <!--Labels for rows 0-11-->
+                <span>Row {{ row }}   :</span> 
+                {% for col, status in columns.items() %}
+                    <!--Boxes show the open seats and reserved seats-->
+                    <div class="seat">
+                        {% if status == 'open' %}
+                            O  
+                        {% else %}
+                            <div class="taken">
+                                X
+                            </div>
+                        {% endif %}
+                    </div>
                 {% endfor %}
-            {% endfor %}
+            </div>
+        {% endfor %}
         </div>
-        <div class="total-sales">
-            Total Sales: $<span id="sales-value">0</span>
-        </div>
+        
         <div class="login-form">
-            <h2>Login</h2>
-            <form method="POST" action="{{ url_for('login') }}">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" required><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required><br>
-                <button type="submit">Login</button>
+            <form method="POST" action="{{ url_for('reservations') }}">
+                <label for="firstname">First Name:</label><br>
+                <input type="text" id="firstname" name="firstname" required><br>
+                <label for="lastname">Last Name:</label><br>
+                <input type="lastname" id="lastname" name="lastname" required><br>
+                <label for="rowoption">Choose a Row:</label><br>
+                    <select id="selectRow" name="selectRow">
+                        <option value="" disabled selected>-- Select a Row --</option>
+                        {% for num in row_options %}
+                            <option value="{{ num }}">{{ num }}</option>
+                        {% endfor %}
+                    </select><br>
+                
+                <label for="columnoption">Choose a Seat:</label><br>
+                    <select id="selectSeat" name="selectSeat">
+                        <option value="" disabled selected>-- Select a Column --</option>
+                        {% for num in seat_options %}
+                            <option value="{{ num }}">{{ num }}</option>
+                        {% endfor %}
+                    </select><br>
+                
+                <button type="submit">Submit</button>
             </form>
         </div>
+        
     </div>
 </body>
 </html>
+{% endblock %}
+
+        

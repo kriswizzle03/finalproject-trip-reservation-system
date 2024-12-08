@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS reservations;
 
+
 CREATE TABLE reservations (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     passengerName TEXT NOT NULL,
