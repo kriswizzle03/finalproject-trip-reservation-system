@@ -154,4 +154,4 @@ def handle_value_error(e):
 
 
 # route to create a post
-app.run()
+app.run(host="0.0.0.0")
