@@ -1,2 +1,3 @@
-# Project: Trip Reservation System
+# Final Project: Trip Reservation System
 ## Scrum Team 15
+### This project is a menu-driven reservation system to load and save bus seat reservations from a database. Users are presented with a homepage and have the option to log in using administrator credentials or they can reserve a specific open seat using their first and last name. If a user chooses to log in using administrator credentials, they are redirected to an admin login page. Admins can view the current seats reserved on the bus and total sales generated from the reserved seats. If a user chooses to sign up for a seat, they are redirected to a reservations page and can use their first and last name to sign up for an open seat. Upon reserving a valid seat, the user is given a confirmation message and an eTicket number.
