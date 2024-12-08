@@ -3,11 +3,11 @@
 {% block title %}
 Homepage
 {% endblock %}
-
 {% block content %}
+
     <h1>IT-4320 Trip Reservation System</h1>
     <div class="message-box">
-        <p>Welcome to our trip reservation system.</p>
+        <p>Welcome to our trip reservation system. Use the select box to choose whether to make a reservation or log in as an administrator.</p>
     </div>
 
     <!-- Display error messages -->
@@ -19,15 +19,17 @@ Homepage
     {% endif %}
     {% endwith %}
 
-    <!-- Dropdown form -->
-    <form method="POST" action="/">
-        <label for="option">Choose an action:</label>
-        <select name="option" id="option">
-            <option value="" disabled selected>-- Select an option --</option>
-            <option value="reserve_seat">Reserve a Seat</option>
-            <option value="admin_login">Admin Login</option>
-        </select>
-        <br><br>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="login-form">
+        <!-- Dropdown form -->
+        <form method="POST" action="/">
+            <label for="option">Choose Menu Option:</label>
+            <select name="option" id="option">
+                <option value="" disabled selected>-- Select an option --</option>
+                <option value="reserve_seat">Reserve a Seat</option>
+                <option value="admin_login">Admin Login</option>
+            </select>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 {% endblock %}
